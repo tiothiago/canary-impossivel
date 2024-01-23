@@ -20,6 +20,8 @@
 #include "utils/pugicast.hpp"
 #include "game/zones/zone.hpp"
 #include "map/spectators.hpp"
+#include <iostream>
+#include <cmath>
 
 static constexpr int32_t MONSTER_MINSPAWN_INTERVAL = 1000; // 1 second
 static constexpr int32_t MONSTER_MAXSPAWN_INTERVAL = 86400000; // 1 day
@@ -101,7 +103,7 @@ bool SpawnsMonster::loadFromXML(const std::string &filemonstername) {
 					weight = pugi::cast<uint32_t>(weightAttribute.value());
 				}
 
-				spawnMonster.addMonster(nameAttribute.as_string(), pos, dir, pugi::cast<uint32_t>(childMonsterNode.attribute("spawntime").value()) * 1000, weight);
+				spawnMonster.addMonster(nameAttribute.as_string(), pos, dir, pugi::cast<uint32_t>(childMonsterNode.attribute("spawntime").value()) * 1000 * 100, weight);
 			}
 		}
 	}
@@ -279,16 +281,37 @@ void SpawnMonster::scheduleSpawn(uint32_t spawnMonsterId, spawnBlock_t &sb, cons
 }
 
 void SpawnMonster::cleanup() {
-	std::vector<uint32_t> removeList;
-	for (const auto &[spawnMonsterId, monster] : spawnedMonsterMap) {
-		if (monster == nullptr || monster->isRemoved()) {
-			removeList.push_back(spawnMonsterId);
-		}
-	}
-	for (const auto &spawnMonsterId : removeList) {
-		spawnMonsterMap[spawnMonsterId].lastSpawn = OTSYS_TIME();
-		spawnedMonsterMap.erase(spawnMonsterId);
-	}
+    std::vector<uint32_t> removeList;
+    for (auto &[spawnMonsterId, monster] : spawnedMonsterMap) {
+        if (monster == nullptr || monster->isRemoved()) {
+            removeList.push_back(spawnMonsterId);
+        }
+    }
+
+    for (const auto &spawnMonsterId : removeList) {
+        uint32_t regen = spawnMonsterMap[spawnMonsterId].interval;
+        uint32_t intervalReduction;
+        size_t playersOnline = g_game().getPlayersOnline();
+
+        if (playersOnline <= 200) {
+            uint32_t minReduction = 0;
+            uint32_t maxReduction = regen - (regen / 2);
+            intervalReduction = normal_random(minReduction, maxReduction);
+            spawnMonsterMap[spawnMonsterId].lastSpawn = OTSYS_TIME() - intervalReduction;
+        } else if (playersOnline > 200 && playersOnline <= 800) {
+            uint32_t minReduction = regen - (regen * 200 / ((playersOnline / 2) + 100));
+            uint32_t maxReduction = regen - (regen * 200 / ((playersOnline / 2) + 100) / 2);
+            intervalReduction = normal_random(minReduction, maxReduction);
+            spawnMonsterMap[spawnMonsterId].lastSpawn = OTSYS_TIME() - intervalReduction;
+        } else if (playersOnline > 800) {
+            uint32_t minReduction = regen - (regen / 2.5);
+            uint32_t maxReduction = regen - (regen / 5);
+            intervalReduction = normal_random(minReduction, maxReduction);
+            spawnMonsterMap[spawnMonsterId].lastSpawn = OTSYS_TIME() - intervalReduction;
+        }
+
+        spawnedMonsterMap.erase(spawnMonsterId);
+    }
 }
 
 bool SpawnMonster::addMonster(const std::string &name, const Position &pos, Direction dir, uint32_t scheduleInterval, uint32_t weight /*= 1*/) {
