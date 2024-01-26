@@ -257,15 +257,9 @@ int LootFunctions::luaLootSetUnique(lua_State* L) {
 
 int LootFunctions::luaLootAddChildLoot(lua_State* L) {
 	// loot:addChildLoot(loot)
-	const auto loot = getUserdataShared<Loot>(L, 1);
+	Loot* loot = getUserdata<Loot>(L, 1);
 	if (loot) {
-		const auto childLoot = getUserdata<Loot>(L, 2);
-		if (childLoot) {
-			loot->lootBlock.childLoot.push_back(childLoot->lootBlock);
-			pushBoolean(L, true);
-		} else {
-			pushBoolean(L, false);
-		}
+		loot->lootBlock.childLoot.push_back(getUserdata<Loot>(L, 2)->lootBlock);
 	} else {
 		lua_pushnil(L);
 	}
