@@ -257,7 +257,7 @@ int LootFunctions::luaLootSetUnique(lua_State* L) {
 
 int LootFunctions::luaLootAddChildLoot(lua_State* L) {
 	// loot:addChildLoot(loot)
-	Loot* loot = getUserdata<Loot>(L, 1);
+	const auto loot = getUserdataShared<Loot>(L, 1);
 	if (loot) {
 		loot->lootBlock.childLoot.push_back(getUserdata<Loot>(L, 2)->lootBlock);
 	} else {
