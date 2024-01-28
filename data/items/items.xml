@@ -7360,6 +7360,8 @@
 		<attribute key="range" value="3"/>
 		<attribute key="attack" value="25"/>
 		<attribute key="weight" value="2000"/>
+		<attribute key="lifeleechamount" value="600"/>
+		<attribute key="lifeleechchance" value="100"/>
 	</item>
 	<item id="3278" article="a" name="magic longsword">
 		<attribute key="primarytype" value="sword weapons"/>
@@ -69318,5 +69320,20 @@
 		<attribute key="loottype" value="valuable" />
 		<attribute key="primarytype" value="valuables" />
 		<attribute key="weight" value="120" />
+	</item>
+	<item id="44780" article="a" name="legendary plate armor">
+		<attribute key="primarytype" value="armors"/>
+		<attribute key="armor" value="10"/>
+		<attribute key="weight" value="12000"/>
+	</item>
+	<item id="44781" article="a" name="epic plate armor">
+		<attribute key="primarytype" value="armors"/>
+		<attribute key="armor" value="10"/>
+		<attribute key="weight" value="12000"/>
+	</item>
+	<item id="44782" article="a" name="rare plate armor">
+		<attribute key="primarytype" value="armors"/>
+		<attribute key="armor" value="10"/>
+		<attribute key="weight" value="12000"/>
 	</item>
 </items>

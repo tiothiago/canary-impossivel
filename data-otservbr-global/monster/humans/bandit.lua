@@ -10,7 +10,7 @@ monster.outfit = {
 	lookLegs = 24,
 	lookFeet = 95,
 	lookAddons = 0,
-	lookMount = 0,
+	lookMount = 0
 }
 
 monster.raceId = 223
@@ -24,8 +24,8 @@ monster.Bestiary = {
 	Stars = 2,
 	Occurrence = 0,
 	Locations = "Dark Cathedral, Tiquanda Bandit Caves, Outlaw Camp, mountain pass west of Ankrahmun, \z
-		Tyrsung, Thais Bandit Cave, Formorgar Mines. Also summoned by Gamel.",
-}
+		Tyrsung, Thais Bandit Cave, Formorgar Mines. Also summoned by Gamel."
+	}
 
 monster.health = 245
 monster.maxHealth = 245
@@ -35,8 +35,8 @@ monster.speed = 90
 monster.manaCost = 450
 
 monster.changeTarget = {
-	interval = 5000,
-	chance = 0,
+	interval = 1000,
+	chance = 50
 }
 
 monster.strategiesTarget = {
@@ -53,7 +53,7 @@ monster.flags = {
 	illusionable = true,
 	canPushItems = true,
 	canPushCreatures = false,
-	staticAttackChance = 90,
+	staticAttackChance = 80,
 	targetDistance = 1,
 	runHealth = 25,
 	healthHidden = false,
@@ -61,60 +61,65 @@ monster.flags = {
 	canWalkOnEnergy = false,
 	canWalkOnFire = false,
 	canWalkOnPoison = false,
+	pet = false
 }
 
 monster.light = {
 	level = 0,
-	color = 0,
+	color = 0
 }
 
 monster.voices = {
 	interval = 5000,
 	chance = 10,
-	{ text = "Hand me your purse!", yell = false },
-	{ text = "Your money or your life!", yell = false },
+	{text = "Your money or your life!", yell = false},
+	{text = "Hand me your purse!", yell = false}
 }
 
 monster.loot = {
-	{ name = "gold coin", chance = 49000, maxCount = 30 },
-	{ name = "axe", chance = 29900 },
-	{ name = "mace", chance = 10100 },
-	{ name = "chain helmet", chance = 5000 },
-	{ name = "iron helmet", chance = 520 },
-	{ name = "brass armor", chance = 2500 },
-	{ name = "brass shield", chance = 16800 },
-	{ name = "leather legs", chance = 15500 },
-	{ name = "tomato", chance = 7630, maxCount = 2 },
+	
+		{name = "war hammer", chance = 100},
+		{name = "axe", chance = 30000},
+		{name = "mace", chance = 10000},
+		{name = "brass shield", chance = 17000},
+	
+	{name = "gold coin", chance = 40000, maxCount = 20},
+	{name = "gold coin", chance = 15000, maxCount = 10},
+	{name = "chain helmet", chance = 5000},
+	{name = "iron helmet", chance = 500},
+	{name = "brass armor", chance = 2500},
+	{name = "leather legs", chance = 15000},
+	{name = "war hammer", chance = 100},
+	{name = "meat", chance = 10000}
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45 },
+	{name ="melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -47}
 }
 
 monster.defenses = {
-	defense = 15,
-	armor = 11,
-	mitigation = 0.43,
+	defense = 31,
+	armor = 11
 }
 
 monster.elements = {
-	{ type = COMBAT_PHYSICALDAMAGE, percent = -10 },
-	{ type = COMBAT_ENERGYDAMAGE, percent = 0 },
-	{ type = COMBAT_EARTHDAMAGE, percent = 0 },
-	{ type = COMBAT_FIREDAMAGE, percent = 0 },
-	{ type = COMBAT_LIFEDRAIN, percent = 0 },
-	{ type = COMBAT_MANADRAIN, percent = 0 },
-	{ type = COMBAT_DROWNDAMAGE, percent = 0 },
-	{ type = COMBAT_ICEDAMAGE, percent = 0 },
-	{ type = COMBAT_HOLYDAMAGE, percent = 0 },
-	{ type = COMBAT_DEATHDAMAGE, percent = -5 },
+	{type = COMBAT_PHYSICALDAMAGE, percent = -10},
+	{type = COMBAT_ENERGYDAMAGE, percent = 0},
+	{type = COMBAT_EARTHDAMAGE, percent = 0},
+	{type = COMBAT_FIREDAMAGE, percent = 0},
+	{type = COMBAT_LIFEDRAIN, percent = 0},
+	{type = COMBAT_MANADRAIN, percent = 0},
+	{type = COMBAT_DROWNDAMAGE, percent = 0},
+	{type = COMBAT_ICEDAMAGE, percent = 0},
+	{type = COMBAT_HOLYDAMAGE , percent = 0},
+	{type = COMBAT_DEATHDAMAGE , percent = -5}
 }
 
 monster.immunities = {
-	{ type = "paralyze", condition = false },
-	{ type = "outfit", condition = false },
-	{ type = "invisible", condition = false },
-	{ type = "bleed", condition = false },
+	{type = "paralyze", condition = false},
+	{type = "outfit", condition = false},
+	{type = "invisible", condition = false},
+	{type = "bleed", condition = false}
 }
 
 mType:register(monster)
